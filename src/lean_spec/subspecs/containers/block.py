@@ -14,7 +14,7 @@ class BlockBody(StrictBaseModel):
 
     votes: Annotated[
         list[Vote],
-        Field(max_length=config.VALIDATOR_REGISTRY_LIMIT),
+        Field(max_length=config.STAKER_REGISTRY_LIMIT),
     ]
     """
     A list of votes included in the block.
@@ -30,7 +30,7 @@ class BlockHeader(StrictBaseModel):
     """The slot in which the block was proposed."""
 
     proposer_index: Uint64
-    """The index of the validator that proposed the block."""
+    """The index of the Proposer that proposed the block."""
 
     parent_root: Bytes32
     """The root of the parent block."""
@@ -49,7 +49,7 @@ class Block(StrictBaseModel):
     """The slot in which the block was proposed."""
 
     proposer_index: Uint64
-    """The index of the validator that proposed the block."""
+    """The index of the Proposer that proposed the block."""
 
     parent_root: Bytes32
     """The root of the parent block."""

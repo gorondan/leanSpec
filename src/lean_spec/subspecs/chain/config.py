@@ -26,15 +26,15 @@ PROPOSER_REORG_CUTOFF_BPS: Final = 2500
 The deadline within a slot (in basis points) for a proposer to publish a
 block.
 
-Honest validators may re-org blocks published after this cutoff.
+Attesters may re-org blocks published after this cutoff.
 
 (2500 bps = 25% of slot duration).
 """
 
 VOTE_DUE_BPS: Final = 5000
 """
-The deadline within a slot (in basis points) by which validators must
-submit their votes.
+The deadline within a slot (in basis points) by which attesters must
+submit their attestations.
 
 (5000 bps = 50% of slot duration).
 """
@@ -102,5 +102,5 @@ DEVNET_CONFIG: Final = _ChainConfig(
     fast_confirm_due_bps=FAST_CONFIRM_DUE_BPS,
     view_freeze_cutoff_bps=VIEW_FREEZE_CUTOFF_BPS,
     historical_roots_limit=HISTORICAL_ROOTS_LIMIT,
-    staker_registry_limit=STAKER_REGISTRY_LIMIT
+    staker_registry_limit=STAKER_REGISTRY_LIMIT,
 )

@@ -4,7 +4,7 @@ from pydantic import Field
 from typing_extensions import Annotated
 
 from lean_spec.subspecs.chain import DEVNET_CONFIG
-from lean_spec.types import Bytes32, StrictBaseModel, Uint64, ValidatorIndex
+from lean_spec.types import Bytes32, StakerIndex, StrictBaseModel, Uint64
 
 from .block import BlockHeader
 from .checkpoint import Checkpoint
@@ -52,14 +52,14 @@ class State(StrictBaseModel):
     ]
     """Roots of justified blocks."""
 
-    justifications_validators: Annotated[
+    justifications_attesters: Annotated[
         list[bool],
         Field(
             max_length=(DEVNET_CONFIG.historical_roots_limit * DEVNET_CONFIG.historical_roots_limit)
         ),
     ]
-    """A bitlist of validators who participated in justifications."""
+    """A bitlist of attesters who participated in justifications."""
 
-    def is_proposer(self, validator_index: ValidatorIndex) -> bool:
-        """Check if a validator is the proposer for the current slot."""
-        return self.slot % self.config.num_validators == validator_index
+    def is_proposer(self, staker_index: StakerIndex) -> bool:
+        """Check if a staker is the proposer for the current slot."""
+        return self.slot % self.config.num_stakers == staker_index

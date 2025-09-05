@@ -6,22 +6,22 @@ from .checkpoint import Checkpoint
 
 
 class Vote(StrictBaseModel):
-    """Represents a validator's vote for chain head."""
+    """Represents an attester's vote for chain head."""
 
-    validator_id: Uint64
-    """The index of the voting validator."""
+    attester: Uint64
+    """The index of the voting attester."""
 
     slot: Uint64
     """The slot for which this vote is cast."""
 
     head: Checkpoint
-    """The validator's perceived head of the chain."""
+    """The attester's perceived head of the chain."""
 
     target: Checkpoint
-    """The justified checkpoint the validator is voting for."""
+    """The justified checkpoint the attester is voting for."""
 
     source: Checkpoint
-    """The last justified checkpoint known to the validator."""
+    """The last justified checkpoint known to the attester."""
 
 
 class SignedVote(StrictBaseModel):

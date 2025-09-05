@@ -10,13 +10,13 @@ from lean_spec.subspecs.containers import (
     Config,
     State,
 )
-from lean_spec.types import Bytes32, Uint64, ValidatorIndex
+from lean_spec.types import Bytes32, StakerIndex, Uint64
 
 
 @pytest.fixture
 def sample_config() -> Config:
-    """A sample configuration with 10 validators."""
-    return Config(num_validators=10, genesis_time=0)
+    """A sample configuration with 10 stakers."""
+    return Config(num_stakers=10, genesis_time=0)
 
 
 @pytest.fixture
@@ -43,7 +43,7 @@ def test_is_proposer(
     sample_checkpoint: Checkpoint,
 ) -> None:
     """
-    Test the `is_proposer` method with various slots and validator indices.
+    Test the `is_proposer` method with various slots and staker indices.
     """
 
     def create_state_at_slot(slot: int) -> State:
@@ -57,25 +57,25 @@ def test_is_proposer(
             historical_block_hashes=[],
             justified_slots=[],
             justifications_roots=[],
-            justifications_validators=[],
+            justifications_attesters=[],
         )
 
     # Slot 0
     state_slot_0 = create_state_at_slot(0)
-    assert state_slot_0.is_proposer(ValidatorIndex(0)) is True
-    assert state_slot_0.is_proposer(ValidatorIndex(1)) is False
+    assert state_slot_0.is_proposer(StakerIndex(0)) is True
+    assert state_slot_0.is_proposer(StakerIndex(1)) is False
 
     # Slot 7
     state_slot_7 = create_state_at_slot(7)
-    assert state_slot_7.is_proposer(ValidatorIndex(7)) is True
-    assert state_slot_7.is_proposer(ValidatorIndex(8)) is False
+    assert state_slot_7.is_proposer(StakerIndex(7)) is True
+    assert state_slot_7.is_proposer(StakerIndex(8)) is False
 
     # Slot 10 (wraps around)
     state_slot_10 = create_state_at_slot(10)
-    assert state_slot_10.is_proposer(ValidatorIndex(0)) is True
-    assert state_slot_10.is_proposer(ValidatorIndex(1)) is False
+    assert state_slot_10.is_proposer(StakerIndex(0)) is True
+    assert state_slot_10.is_proposer(StakerIndex(1)) is False
 
     # Slot 23 (wraps around)
     state_slot_23 = create_state_at_slot(23)
-    assert state_slot_23.is_proposer(ValidatorIndex(3)) is True
-    assert state_slot_23.is_proposer(ValidatorIndex(2)) is False
+    assert state_slot_23.is_proposer(StakerIndex(3)) is True
+    assert state_slot_23.is_proposer(StakerIndex(2)) is False
